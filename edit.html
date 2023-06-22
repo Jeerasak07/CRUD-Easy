@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>แก้ไขรายการ</title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+    <div class="container">
+  <h1>แก้ไขรายการ</h1>
+
+  <form action="index.html" method="post">
+    <label for="firstName">ชื่อ:</label>
+    <input type="text" id="firstName" name="firstName" required><br>
+
+    <label for="lastName">นามสกุล:</label>
+    <input type="text" id="lastName" name="lastName" required><br>
+
+    <label for="age">อายุ:</label>
+    <input type="number" id="age" name="age" required><br>
+
+    <label for="birthday">วันเดือนปีเกิด:</label>
+    <input type="date" id="birthday" name="birthday" required><br>
+
+    <label for="email">อีเมล:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="phone">เบอร์โทร:</label>
+    <input type="tel" id="phone" name="phone" required><br>
+
+    <input type="submit" value="บันทึก">
+  </form>
+
+  <script>
+    // ตรวจสอบว่ามีค่า index ใน URL หรือไม่
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("index")) {
+      var editIndex = parseInt(urlParams.get("index"));
+
+      // ดึงข้อมูลจาก Local Storage
+      var data = JSON.parse(localStorage.getItem("data"));
+
+      // กำหนดค่าให้กับฟอร์มแก้ไข
+      var editForm = document.querySelector("form");
+      editForm.firstName.value = data[editIndex].firstName;
+      editForm.lastName.value = data[editIndex].lastName;
+      editForm.age.value = data[editIndex].age;
+      editForm.birthday.value = data[editIndex].birthday;
+      editForm.email.value = data[editIndex].email;
+      editForm.phone.value = data[editIndex].phone;
+
+      editForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // อัปเดตข้อมูลใน Local Storage
+        data[editIndex].firstName = editForm.firstName.value;
+        data[editIndex].lastName = editForm.lastName.value;
+        data[editIndex].age = editForm.age.value;
+        data[editIndex].birthday = editForm.birthday.value;
+        data[editIndex].email = editForm.email.value;
+        data[editIndex].phone = editForm.phone.value;
+        localStorage.setItem("data", JSON.stringify(data));
+
+        // แจ้งเตือนเมื่อแก้ไขเสร็จสิ้น
+        alert("แก้ไขรายการเรียบร้อยแล้ว");
+
+        // กลับไปที่หน้า index
+        window.location.href = "index.html";
+      });
+    }
+  </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>สร้างรายการใหม่</title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+    <div class="container">
+  <h1>สร้างรายการใหม่</h1>
+
+  <form id="create-form">
+    <label for="first-name">ชื่อ:</label>
+    <input type="text" id="first-name" name="first-name"><br>
+
+    <label for="last-name">นามสกุล:</label>
+    <input type="text" id="last-name" name="last-name"><br>
+
+    <label for="age">อายุ:</label>
+    <input type="number" id="age" name="age" required><br>
+
+    <label for="birthday">วันเดือนปีเกิด:</label>
+    <input type="date" id="birthday" name="birthday" required><br>
+
+    <label for="email">อีเมล:</label>
+    <input type="email" id="email" name="email"><br>
+
+    <label for="phone">เบอร์โทร:</label>
+    <input type="text" id="phone" name="phone"><br>
+
+    <input type="submit" value="บันทึก">
+  </form>
+
+  <script>
+    // เมื่อฟอร์มถูกส่ง
+    document.getElementById("create-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // ไม่ให้ฟอร์มทำการรีเฟรชหน้า
+
+      // ดึงข้อมูลจากฟอร์ม
+      var firstName = document.getElementById("first-name").value;
+      var lastName = document.getElementById("last-name").value;
+      var age = document.getElementById("age").value;
+      var birthday = document.getElementById("birthday").value;
+      var email = document.getElementById("email").value;
+      var phone = document.getElementById("phone").value;
+
+      // สร้างออบเจ็กต์ข้อมูลใหม่
+      var newData = {
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        birthday: birthday,
+        email: email,
+        phone: phone
+      };
+
+      // เช็คว่ามีข้อมูลใน Local Storage หรือไม่
+      var storedData = localStorage.getItem("data");
+      var dataArray = storedData ? JSON.parse(storedData) : [];
+
+      // เพิ่มข้อมูลใหม่ลงในอาร์เรย์
+      dataArray.push(newData);
+
+      // เก็บข้อมูลลงใน Local Storage
+      localStorage.setItem("data", JSON.stringify(dataArray));
+
+      // ไปยังหน้า index.html
+      window.location.href = "index.html";
+    });
+  </script>
+</div>
+</body>
+</html>

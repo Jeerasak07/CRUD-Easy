@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ลบรายการ</title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+  <h1>ลบรายการ</h1>
+
+  <p>คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?</p>
+
+  <form action="index.html" method="post">
+    <input type="submit" value="ลบ">
+  </form>
+
+  <script>
+    // ตรวจสอบว่ามีค่า index ใน URL หรือไม่
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("index")) {
+      var deleteIndex = parseInt(urlParams.get("index"));
+
+      // ดึงข้อมูลจาก Local Storage
+      var data = JSON.parse(localStorage.getItem("data"));
+
+      // ลบรายการที่ต้องการ
+      data.splice(deleteIndex, 1);
+      localStorage.setItem("data", JSON.stringify(data));
+
+      // แจ้งเตือนเมื่อลบเสร็จสิ้น
+      alert("ลบรายการเรียบร้อยแล้ว");
+
+      // กลับไปที่หน้า index
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
