@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ระบบ CRUD</title>
+    <script>
+        var data = [];
+
+        function createData() {
+            var name = document.getElementById("name").value;
+            var age = document.getElementById("age").value;
+            var email = document.getElementById("email").value;
+
+            var record = {
+                name: name,
+                age: age,
+                email: email
+            };
+
+            data.push(record);
+            console.log("เพิ่มข้อมูลเรียบร้อยแล้ว");
+        }
+
+        function readData() {
+            var table = document.getElementById("data-table");
+
+            // ล้างข้อมูลทั้งหมดในตาราง
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            // แสดงข้อมูลทั้งหมดในตาราง
+            for (var i = 0; i < data.length; i++) {
+                var record = data[i];
+
+                var row = table.insertRow(i);
+                var nameCell = row.insertCell(0);
+                var ageCell = row.insertCell(1);
+                var emailCell = row.insertCell(2);
+
+                nameCell.innerHTML = record.name;
+                ageCell.innerHTML = record.age;
+                emailCell.innerHTML = record.email;
+            }
+        }
+
+        function updateData() {
+            var name = prompt("กรุณาระบุชื่อที่ต้องการแก้ไข");
+            var found = false;
+
+            for (var i = 0; i < data.length; i++) {
+                var record = data[i];
+
+                if (record.name === name) {
+                    var newName = prompt("ชื่อใหม่");
+                    var newAge = prompt("อายุใหม่");
+                    var newEmail = prompt("อีเมลใหม่");
+
+                    record.name = newName;
+                    record.age = newAge;
+                    record.email = newEmail;
+
+                    console.log("แก้ไขข้อมูลเรียบร้อยแล้ว");
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                console.log("ไม่พบชื่อในรายการ");
+            }
+        }
+
+        function deleteData() {
+            var name = prompt("กรุณาระบุชื่อที่ต้องการลบ");
+            var foundIndex = -1;
+
+            for (var i = 0; i < data.length; i++) {
+                var record = data[i];
+
+                if (record.name === name) {
+                    foundIndex = i;
+                    break;
+                }
+            }
+
+            if (foundIndex !== -1) {
+                data.splice(foundIndex, 1);
+                console.log("ลบข้อมูลเรียบร้อยแล้ว");
+            } else {
+                console.log("ไม่พบชื่อในรายการ");
+            }
+        }
+    </script>
+</head>
+<body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <div class="container">
+    <h1>ระบบ CRUD</h1>
+
+    <label>ชื่อ:</label>
+    <input type="text" id="name">
+    <br><br>
+
+    <label>อายุ:</label>
+    <input type="text" id="age">
+    <br><br>
+
+    <label>อีเมล:</label>
+    <input type="text" id="email">
+    <br><br>
+
+    <button onclick="createData()">เพิ่มข้อมูล</button>
+    <button onclick="readData()">แสดงข้อมูล</button>
+    <button onclick="updateData()">แก้ไขข้อมูล</button>
+    <button onclick="deleteData()">ลบข้อมูล</button>
+
+    <br><br>
+
+    <table id="data-table" border="1" class="table table-striped table-hover">
+        <tr>
+            <th>ชื่อ</th>
+            <th>อายุ</th>
+            <th>อีเมล</th>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
